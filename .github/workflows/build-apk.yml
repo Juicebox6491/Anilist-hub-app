@@ -27,7 +27,9 @@ jobs:
           java-version: '17'
 
       - name: Install dependencies
-        run: npm ci || npm install
+        run: npm install
+        # If your package.json is in a subfolder, uncomment the line below and set your folder name:
+        # working-directory: Anilist-hub-app
 
       - name: Sync Capacitor
         run: npx cap sync android
@@ -44,4 +46,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: |
+            android/app/build/outputs/apk/debug/app-debug.apk
+            **/android/app/build/outputs/apk/debug/app-debug.apk
