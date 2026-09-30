@@ -7,6 +7,9 @@ on:
       - master
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -54,8 +57,15 @@ jobs:
           chmod +x gradlew
           ./gradlew assembleDebug
 
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
+      - name: Rename APK File
+        run: mv android/app/build/outputs/apk/debug/app-debug.apk AniListHub.apk
+
+      - name: Create Continuous GitHub Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: AniListHub-debug.apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          tag_name: latest
+          name: AniList Hub - Latest Build
+          body: "Automated APK build generated directly from latest commit."
+          files: AniListHub.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
