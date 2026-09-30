@@ -29,6 +29,9 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Initialize Capacitor
+        run: npx cap init "AniList Hub" com.anilisthub.app --web-dir www
+
       - name: Add Android Platform
         run: npx cap add android
 
