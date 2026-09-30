@@ -1,0 +1,16 @@
+{
+  "name": "anilist-hub-app",
+  "version": "1.0.0",
+  "description": "AniList PTW and Hub App",
+  "main": "www/index.html",
+  "scripts": {
+    "build": "echo 'No build step needed for plain HTML'"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/core": "^6.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.0.0"
+  }
+}
