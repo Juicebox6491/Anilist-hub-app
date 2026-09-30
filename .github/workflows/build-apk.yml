@@ -26,19 +26,27 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Install Capacitor Dependencies
-        run: npm install @capacitor/cli @capacitor/core @capacitor/android
-
-      - name: Prepare Web Directory & Capacitor
+      - name: Ensure WWW Directory and Index File
         run: |
           mkdir -p www
-          if [ -f index.html ]; then cp index.html www/; fi
-          npx cap init "AniList Hub" "com.anilisthub.app" --web-dir "www"
+          if [ -f index.html ]; then
+            cp index.html www/index.html
+          fi
+          if [ ! -f www/index.html ]; then
+            echo "<html><body><h1>AniList Hub</h1></body></html>" > www/index.html
+          fi
 
-      - name: Add & Sync Android Platform
-        run: |
-          npx cap add android
-          npx cap sync android
+      - name: Install Capacitor Dependencies
+        run: npm install @capacitor/cli@^6.0.0 @capacitor/core@^6.0.0 @capacitor/android@^6.0.0
+
+      - name: Initialize Capacitor
+        run: npx cap init "AniList Hub" "com.anilisthub.app" --web-dir "www"
+
+      - name: Add Android Platform
+        run: npx cap add android
+
+      - name: Sync Capacitor Assets
+        run: npx cap sync android
 
       - name: Build Debug APK
         run: |
